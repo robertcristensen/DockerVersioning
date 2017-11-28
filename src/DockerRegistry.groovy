@@ -1,7 +1,5 @@
-package com.jenkins.libs
-
 class DockerRegistry implements Serializable{
-    private def steps     //object to pass current libs context
+    private def steps     //object to pass current pipeline context
     private def regAddr   //registry address
     private def imgTag    //docker image tag
     private def imgRepo   //docker image repo name in registry
@@ -99,27 +97,24 @@ class DockerRegistry implements Serializable{
         def regAddr = list[0]
         //get image tag
         def imgTag = list[list.size()-1].split(':')[1]
-        //get imgage repo name
-        if (list.size()>=3){ imgRepo = list[1] }
-        //if repo has more elements we need to add them
-        if (list.size() >= 4){
-            for (def i=2; i<list.size()-1; i++){
-                imgRepo = imgRepo + '/' + list[i]
-            }
-        }
-        if (imgRepo == '') { imgRepo = list[list.size()-1].split(':')[0] }
-        else { imgRepo = imgRepo +'/'+ list[list.size()-1].split(':')[0] }
-        //get branch name
-        if (tagIsConventional(list[list.size()-1].split(':')[1])){
-            this.branch = list[list.size()-1].split(':')[1].split('_')[1]
+        // get branch name
+        if (tagIsConventional(imgTag)){
+            this.branch = imgTag.split('_')[1]
         }
         else {
-            echo "Tag is not conventional " + list[list.size()-1].split(':')[1]
+            echo "Tag is not conventional: " + imgTag
             this.branch = ''
         }
+        //get imgage repo name
+        list[list.size()-1] = list[list.size()-1].split(':')[0]
+        list = list[1..list.size()-1]
+        imgRepo = list.join('/')
         this.regAddr = regAddr
         this.imgTag = imgTag
         this.imgRepo = imgRepo
+        echo "Registry to purge images: " + regAddr
+        echo "Input image tag: " + imgTag
+        echo "Input image repo: " + imgRepo
     }
     private echo(String str){
         this.steps.echo str
@@ -141,8 +136,7 @@ class DockerRegistry implements Serializable{
             return null
         }
         else {
-            echo "Current branch name is:"
-            echo branch
+            echo "Current branch name is: " + branch
             def branch_tags = [:]
             def data = steps.readJSON text: getTags()
             def taglist = data["tags"]
@@ -159,3 +153,4 @@ class DockerRegistry implements Serializable{
         }
     }
 }
+return this
