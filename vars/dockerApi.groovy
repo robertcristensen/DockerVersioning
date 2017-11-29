@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 import com.pipeline.libs.DockerRegistry
 
-def call(){
+def call(def img){
 /*
     def config = [:]
     body.resolveStrategy = Closure.DELEGATE_FIRST
@@ -9,7 +9,9 @@ def call(){
     body()
 */
     echo "Hello from my lib"
-    def r = new DockerRegistry()
+    def r = new DockerRegistry(this)
+    r.connect(img)
+    r.purge(3)
 
 }
 
