@@ -14,6 +14,7 @@ def call(body){
     node{
         stage ('blabla'){
             echo "hello from library"
+            sh "echo texting blabla"
         }
     }
 }
