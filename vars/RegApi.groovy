@@ -1,4 +1,4 @@
-class DockerRegistry implements Serializable{
+class RegApi implements Serializable{
     private def steps     //object to pass current pipeline context
     private def regAddr   //registry address
     private def imgTag    //docker image tag
