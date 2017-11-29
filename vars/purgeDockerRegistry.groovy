@@ -9,4 +9,3 @@ def call(def img, int n){
     r.purge(n)
 
 }
-
