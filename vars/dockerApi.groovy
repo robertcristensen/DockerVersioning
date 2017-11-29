@@ -12,7 +12,9 @@ def call(body){
     r.connect('bsregistrydocker.emea.int.genesyslab.com/genesys/cx-widget:default')
 
     node{
-        echo "hello from library"
+        stage ('blabla'){
+            echo "hello from library"
+        }
     }
 }
 
