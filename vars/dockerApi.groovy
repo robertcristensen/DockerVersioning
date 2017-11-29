@@ -8,6 +8,8 @@ def call(body){
     body.delegate = config
     body()
 
-    def r = new DockerRegistry(config.this)
+    node{
+        echo "hello from library"
+    }
 }
 
