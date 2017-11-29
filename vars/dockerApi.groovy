@@ -1,5 +1,5 @@
 #!/usr/bin/env groovy
-import com.pipeline.libs.DockerRegistry
+import DockerRegistry
 
 def call(body){
 
