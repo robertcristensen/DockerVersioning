@@ -1,6 +1,8 @@
 #!/usr/bin/env groovy
 import com.pipeline.libs.DockerRegistry
 
+Closure.properties
+
 def call(body){
 
     def config = [:]
