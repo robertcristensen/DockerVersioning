@@ -8,6 +8,9 @@ def call(body){
     body.delegate = config
     body()
 
+    def r = new DockerRegistry(this)
+    r.connect('bsregistrydocker.emea.int.genesyslab.com/genesys/cx-widget:default')
+
     node{
         echo "hello from library"
     }
