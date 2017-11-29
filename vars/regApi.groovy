@@ -1,5 +1,3 @@
-package com.pipeline.libs
-
 class DockerRegistry implements Serializable{
     private def steps     //object to pass current pipeline context
     private def regAddr   //registry address
@@ -155,4 +153,3 @@ class DockerRegistry implements Serializable{
         }
     }
 }
-return this
