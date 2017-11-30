@@ -17,7 +17,6 @@ class DockerRegistry implements Serializable{
         parseImg(img)
         // Test the connection to the regisrty API
         def RESULT
-        this.regAddr = regAddr
         try { RESULT = execSh("curl -s -k -w \"%{http_code}\\n\" https://${this.regAddr}/v2/")
             if (RESULT[0].contains('200') && RESULT[1] == 0) {
                 this.connected = true
@@ -55,7 +54,7 @@ class DockerRegistry implements Serializable{
         }
         else {return null}
     }
-    def deleteImage(def tag=this.imgTag){
+    def deleteImage(def tag){
         // Delete image by the specified tag
         def digest = getDigest(tag)
         def RESULT
@@ -138,7 +137,7 @@ class DockerRegistry implements Serializable{
             return null
         }
         else {
-            echo "Current branch name is: " + branch
+            echo "Current branch name is: " + this.branch
             def branch_tags = [:]
             def data = steps.readJSON text: getTags()
             def taglist = data["tags"]
